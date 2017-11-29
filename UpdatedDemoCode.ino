@@ -263,7 +263,7 @@ void Listen() {
 
 void wait(){
   int atEnd=0;
-  char teams = {'r', 'b', 'y', 'o', 'g'}; 
+  char teams[] = {'r', 'b', 'y', 'o', 'g'}; 
   char ourTeamColor= 'g';                     // change to your team color
   for (int x = 0; x < sizeof(teams); x++)     // goes through and removes your team's color     
     if (teams[x] == ourTeamColor)
