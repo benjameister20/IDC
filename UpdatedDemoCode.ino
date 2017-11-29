@@ -263,8 +263,8 @@ void Listen() {
 
 void wait(){
   int atEnd=0;
-  char teams[] = {'r', 'b', 'y', 'o', 'g'}; 
-  char ourTeamColor= 'g';                     // change to your team color
+  char teams[] = {'q', 'w', 'e', 't', 'u'}; 
+  char ourTeamColor= 'q';                     // change to a letter not used by anyone else. Yellow team is q, Green is t, Red is w, Blue is e, Orange is u
   for (int x = 0; x < sizeof(teams); x++)     // goes through and removes your team's color     
     if (teams[x] == ourTeamColor)
       teams[x] = 'n';                         // sets index to "n" for null
@@ -282,6 +282,8 @@ void wait(){
 }
 
 void trashShoot() {
+  if (numLights == 1)
+    wait();
   Serial.println("In trashshoot");
   int vL = 100, vR = 30;
   servoL.writeMicroseconds(1500 + vL);      // Stops for half a second
