@@ -231,12 +231,9 @@ void Listen() {
     char a = 0;
     int count = 0;
     while (Serial2.available() > 0 && a != 97) {
-      if (count/100 == 0)
-        Serial2.print('q');
-      Serial.print("sending  q");
+      Serial2.print('q');
       a = Serial2.read();
-      Serial.print(a);
-      count++;
+      delay(100);
     }
     
   if(Serial2.available()) { // Is data available from XBee?
@@ -291,6 +288,8 @@ void wait(){
       }
     }
     Serial2.print('a');
+    delay(50);
+    Serial2.print('a');
   }
 }
 
@@ -304,7 +303,7 @@ void trashShoot() {
   servoL.writeMicroseconds(1500);      // Stops for half a second
   servoR.writeMicroseconds(1500);
   hash = 0;
-  hashNum = numLights;
+  hashNum = 6-numLights;
 }
 
 void Finished() {
