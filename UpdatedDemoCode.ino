@@ -261,6 +261,26 @@ void Listen() {
   Listen();
 }
 
+void wait(){
+  int atEnd=0;
+  char teams = {'r', 'b', 'y', 'o', 'g'}; 
+  char ourTeamColor= 'g';                     // change to your team color
+  for (int x = 0; x < sizeof(teams); x++)     // goes through and removes your team's color     
+    if (teams[x] == ourTeamColor)
+      teams[x] = 'n';                         // sets index to "n" for null
+  while (atEnd<4){
+    Serial2.print(ourTeamColor);              // send out your team color        
+    if(Serial2.available()>0 || incoming!=ourTeamColor){
+      char incoming = Serial2.read();         // read incoming signal
+      for (int x = 0; x < sizeof(teams); x++) 
+          if (incoming == teams[x]) {         // if signal has not been read already, mark bot as read
+            teams[x] = 'n';
+            atEnd+=1;
+          }
+    }
+  }
+}
+
 void trashShoot() {
   Serial.println("In trashshoot");
   int vL = 100, vR = 30;
