@@ -148,9 +148,6 @@ if (rightSide == 0 && rightMid == 1 && leftMid == 0 && leftSide == 0)
       servoL.writeMicroseconds(1500);
       servoR.writeMicroseconds(1500);
       Communicate();
-      Serial.print(maxHash);
-      Serial.print("   ");
-      Serial.println(numLights);
       if (maxHash == numLights) {
         Finished();
       }
@@ -230,10 +227,11 @@ void Listen() {
     Finished();
     char a = 0;
     int count = 0;
-    while (Serial2.available() > 0 && a != 97) {
-      Serial2.print('q');
-      a = Serial2.read();
+    while (numLights != 1 && Serial2.available() > 0 && a != 97) {
+      Serial2.print('z');
       delay(100);
+      a = Serial2.read();
+      Serial2.flush();
     }
     
   if(Serial2.available()) { // Is data available from XBee?
@@ -276,8 +274,7 @@ void wait(){
     for (int x = 0; x < sizeof(teams); x++)     // goes through and removes your team's color     
       if (teams[x] == ourTeamColor)
         teams[x] = 'n';                         // sets index to "n" for null
-    while (atEnd<4){
-      Serial2.print(ourTeamColor);              // send out your team color        
+    while (atEnd<4){     
       if(Serial2.available()>0 || incoming!=ourTeamColor){
         char incoming = Serial2.read();         // read incoming signal
         for (int x = 0; x < sizeof(teams); x++) 
