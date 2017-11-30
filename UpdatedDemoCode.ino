@@ -276,11 +276,12 @@ void Finished() {
   Serial2.print(g);
   Serial2.flush();
   //delay(100);
-  for (int x = 1; x <= 7; x++) {
-    if (x != 5)
-      digitalWrite(x, HIGH);
-    digitalWrite(51, HIGH);
-  }
+  for (int x = 2; x <= 7; x++)
+    if (numLights != 0) {                               // for loop to turn on segment seven display
+      digitalWrite(x, disp[numLights][x-1]);
+      if (numLights==2 || numLights==3 || numLights==5)
+        digitalWrite(51, HIGH);
+    }
   delay(50000000000);
 }
 
