@@ -227,9 +227,9 @@ void Listen() {
     Finished();
     char a = 0;
     int count = 0;
-    while (numLights != 1 && Serial2.available() > 0 && a != 97) {
+    while (numLights != 1 && Serial2.available() > 0 && a != 'a') {
       Serial2.print('z');
-      delay(100);
+      delay(1000);
       a = Serial2.read();
       Serial2.flush();
     }
@@ -285,8 +285,7 @@ void wait(){
       }
     }
     Serial2.print('a');
-    delay(50);
-    Serial2.print('a');
+    delay(3000);
   }
 }
 
