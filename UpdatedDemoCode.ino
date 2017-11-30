@@ -225,17 +225,6 @@ void Communicate() {
 void Listen() {
   if (count == 1)
     Finished();
-    char a = 0;
-    int count = 0;
-    while (numLights != 1 && Serial2.available() > 0 && a == 'z') {
-      Serial2.print('z');
-      delay(100);
-      a = Serial2.read();
-      int t = millis();
-      Serial2.flush();
-      while ( millis() - t < 3000)
-        a = Serial2.read();
-    }
     
   if(Serial2.available()) { // Is data available from XBee?
    incoming = Serial2.read();
@@ -269,35 +258,7 @@ void Listen() {
   Listen();
 }
 
-void wait(){
-  if (numLights == 1) {
-    int atEnd=0;
-    char teams[] = {'q', 'w', 'e', 't', 'u'}; 
-    char ourTeamColor= 'q';                     // change to a letter not used by anyone else. Yellow team is q, Green is t, Red is w, Blue is e, Orange is u
-    for (int x = 0; x < sizeof(teams); x++)     // goes through and removes your team's color     
-      if (teams[x] == ourTeamColor)
-        teams[x] = 'n';                         // sets index to "n" for null
-    while (atEnd<4){     
-      if(Serial2.available()>0 || incoming!=ourTeamColor){
-        char incoming = Serial2.read();         // read incoming signal
-        for (int x = 0; x < sizeof(teams); x++) 
-            if (incoming == teams[x]) {         // if signal has not been read already, mark bot as read
-              teams[x] = 'n';
-              atEnd+=1;
-            }
-      }
-    
-    }
-    int t = millis();
-    while (millis() - t < 4000)
-      Serial2.print('a');
-    
-  }
-}
-
 void trashShoot() {
-  wait();
-  Serial.println("In trashshoot");
   int vL = 100, vR = 30;
   servoL.writeMicroseconds(1500 + vL);      // Stops for half a second
   servoR.writeMicroseconds(1500 - vR);
