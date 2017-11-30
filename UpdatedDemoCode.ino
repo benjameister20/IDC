@@ -227,11 +227,14 @@ void Listen() {
     Finished();
     char a = 0;
     int count = 0;
-    while (numLights != 1 && Serial2.available() > 0 && a != 'a') {
+    while (numLights != 1 && Serial2.available() > 0 && a == 'z') {
       Serial2.print('z');
-      delay(1000);
+      delay(100);
       a = Serial2.read();
+      int t = millis();
       Serial2.flush();
+      while ( millis() - t < 3000)
+        a = Serial2.read();
     }
     
   if(Serial2.available()) { // Is data available from XBee?
@@ -283,9 +286,12 @@ void wait(){
               atEnd+=1;
             }
       }
+    
     }
-    Serial2.print('a');
-    delay(3000);
+    int t = millis();
+    while (millis() - t < 4000)
+      Serial2.print('a');
+    
   }
 }
 
