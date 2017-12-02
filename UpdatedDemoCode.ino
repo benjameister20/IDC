@@ -185,23 +185,31 @@ void Communicate() {                                // once the bot has reached 
 }
 
 void Listen() {
-  if (count == 1)                                   // if bot has received 'g' and driven down the trash
-    Finished();                                     // shoot then stop doing anything
-    
-  if(Serial2.available())                           // listen for incoming messages from other bots
-   incoming = Serial2.read();
-  if (incoming > 64 && incoming < 124 && incoming == 103) // if the incoming signal is a 'g' then increment the number
-    readyCars++;                                          // of cars who have driven down the trash shoot
-
-  if (readyCars == numLights-1 || numLights == 1) { // if bot is first bot or the bot before it has driven down the
-    trashShoot();                                   // trash shoot then start driving down the shoot
-    count++;
-    return;
+  tm = millis();
+  while (true) {
+    if (count == 1)                                   // if bot has received 'g' and driven down the trash
+      Finished();                                     // shoot then stop doing anything
+      
+    if(Serial2.available())                           // listen for incoming messages from other bots
+     incoming = Serial2.read();
+    if (incoming > 64 && incoming < 124 && incoming == 103) { // if the incoming signal is a 'g' then increment the number
+      readyCars++;                                          // of cars who have driven down the trash shoot
+      tm = millis();
+    }
+  
+    if (readyCars == numLights-1 || numLights == 1) { // if bot is first bot or the bot before it has driven down the
+      trashShoot();                                   // trash shoot then start driving down the shoot
+      count++;
+      break;
+    }
+    else
+      incoming = NULL;
+    delay(100);
+    if (millis() - tm > 30000) {
+      Serial2.print('g');
+      readyCars++;
+    }
   }
-  else
-    incoming = NULL;
-  delay(100);
-  Listen();
 }
 
 void trashShoot() {                                 // function to drive down the trash shoot
@@ -217,6 +225,14 @@ void trashShoot() {                                 // function to drive down th
 }
 
 void Finished() {                                   // function for after bot has completed everything
+  long tillStop = millis();
+  tm = millis();
+  while (millis() - tillStop < 180000) {
+    if (millis() - tm > 30000) {
+      Serial2.print('g');
+      break;
+    }
+  }
   delay(50000000000);                               // delay for a looooooong time
 }
 
