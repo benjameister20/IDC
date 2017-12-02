@@ -230,7 +230,7 @@ void Finished() {                                   // function for after bot ha
   while (millis() - tillStop < 180000) {
     if (millis() - tm > 30000) {
       Serial2.print('g');
-      break;
+      tm = millis();
     }
   }
   delay(50000000000);                               // delay for a looooooong time
