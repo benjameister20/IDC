@@ -205,7 +205,7 @@ void Listen() {
     else
       incoming = NULL;
     delay(100);
-    if (millis() - tm > 30000) {
+    if (millis() - tm > 30000) {                    // if no bot has sent a 'g' for 30 seconds, we send one
       Serial2.print('g');
       readyCars++;
     }
@@ -226,7 +226,7 @@ void trashShoot() {                                 // function to drive down th
 
 void Finished() {                                   // function for after bot has completed everything
   long tillStop = millis();
-  tm = millis();
+  tm = millis();                                    // if no bot has sent a 'g' for 30 seconds, we send one
   while (millis() - tillStop < 180000) {
     if (millis() - tm > 30000) {
       Serial2.print('g');
