@@ -1,4 +1,4 @@
-#include <Servo.h>                           // Use the Servo library (included with Arduino IDE)  
+#include <Servo.h>                          // Use the Servo library (included with Arduino IDE)  
 int hash=0;                                 // Count the number of hash marks passed
 Servo servoL;                               // Define the left and right servos
 Servo servoR;
