@@ -75,6 +75,10 @@ void LineFollowing(int maxHash) {
   int rightMid = digitalRead(11);
   int rightSide = digitalRead(53);
   int vL, vR;
+  Serial.print(leftSide);
+  Serial.print(leftMid);
+  Serial.print(rightMid);
+  Serial.println(rightSide);
 
 
                                             // all the possible cases of QTI sensors over the black line or hash mark
