@@ -205,14 +205,16 @@ void Listen() {
     else
       incoming = NULL;
     delay(100);
-    if (millis() - tm > 30000) {                    // if no bot has sent a 'g' for 30 seconds, we send one
+    if (millis() - tm > 50000) {                    // if no bot has sent a 'g' for 30 seconds, we send one
       Serial2.print('g');
       readyCars++;
+      tm = millis();
     }
   }
 }
 
 void trashShoot() {                                 // function to drive down the trash shoot
+  Serial.print("in ts");
   int vL = 100, vR = 30;                            // prepare bot to make a turn over
   servoL.writeMicroseconds(1500 + vL);              // drive over to the trash shoot
   servoR.writeMicroseconds(1500 - vR);
@@ -228,7 +230,7 @@ void Finished() {                                   // function for after bot ha
   long tillStop = millis();
   tm = millis();                                    // if no bot has sent a 'g' for 30 seconds, we send one
   while (millis() - tillStop < 180000) {
-    if (millis() - tm > 30000) {
+    if (millis() - tm > 50000) {
       Serial2.print('g');
       tm = millis();
     }
